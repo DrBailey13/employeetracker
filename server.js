@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
+var consoleTable = require("console.table")
 // create the connection information for the sql database
 var connection = mysql.createConnection({
   host: "localhost",
@@ -44,7 +44,7 @@ function start() {
         addEmployee();
       }
       else if(answer.create === "View") {
-        View();
+        view();
       }
       else{
         connection.end();
@@ -182,4 +182,51 @@ function addEmployee() {
     });
 }
 
+function view() {
+  inquirer
+    .prompt({
+      name: "table",
+      type: "list",
+      message: "Which table would you like to view?",
+      choices: ["Department", "Role", "Employee", ]
+    })
+    .then(function(answer) {
+      // based on their answer, either call the bid or the post functions
+      if (answer.table === "Department") {
+        viewDepartment();
+      }
+      else if(answer.table === "Role") {
+        viewRole();
+      } 
+      else if(answer.table === "Employee") {
+        viewEmployee();
+      }
+      else{
+        connection.end();
+      }
+    });
+}
 
+function viewDepartment() {
+  connection.query("SELECT * FROM department", function(err,res){
+    if (err) throw err;
+    console.table(res);
+    start();
+  })
+};
+
+function viewRole() {
+  connection.query("SELECT * FROM role", function(err,res){
+    if (err) throw err;
+    console.table(res);
+    start();
+  })
+};
+
+function viewEmployee() {
+  connection.query("SELECT * FROM employee", function(err,res){
+    if (err) throw err;
+    console.table(res);
+    start();
+  })
+};
