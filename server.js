@@ -58,15 +58,15 @@ function addDepartment() {
   inquirer
     .prompt([
       {
-        name: "department",
+        name: "division",
         type: "input",
         message: "What is the name of the department you'd like to add?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
+        // validate: function(value) {
+        //   if (isNaN(value) === false) {
+        //     return true;
+        //   }
+        //   return false;
+        // }
       }
     ])
     .then(function(answer) {
@@ -74,12 +74,12 @@ function addDepartment() {
       connection.query(
         "INSERT INTO department SET ?",
         {
-          nameof: answer.department,
+          name: answer.division
         },
         function(err) {
           if (err) throw err;
           console.log("Your department was added successfully!");
-          // re-prompt the user for if they want to bid or post
+          // re-prompt the user
           start();
         }
       );
@@ -87,7 +87,7 @@ function addDepartment() {
 }
 
 function addRole() {
-  // prompt for info about the item being put up for auction
+ 
   inquirer
     .prompt([
       {
@@ -104,12 +104,12 @@ function addRole() {
         name: "departmentId",
         type: "input",
         message: "What is the departmentId of the role you'd like to add?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
+        // validate: function(value) {
+        //   if (isNaN(value) === false) {
+        //     return true;
+        //   }
+        //   return false;
+        // }
       }
     ])
     .then(function(answer) {
@@ -154,12 +154,12 @@ function addEmployee() {
         name: "managerId",
         type: "input",
         message: "What is the manager id of the employee you'd like to add?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
+        // validate: function(value) {
+        //   if (isNaN(value) === false) {
+        //     return true;
+        //   }
+        //   return false;
+        // }
       }
     ])
     .then(function(answer) {
